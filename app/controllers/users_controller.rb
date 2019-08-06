@@ -6,7 +6,18 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect to "/users/:id"
     else
-      redirect to "/signup"
+      redirect to "/"
+    end
+  end
+
+  # GET: /users/new
+  get "/users/new" do
+    erb :"/users/new.html"
+  end
+
+  # POST: /users
+  post "/users" do
+    redirect "/users"
   end
 
   # GET: /users/5

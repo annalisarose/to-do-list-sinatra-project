@@ -9,6 +9,10 @@ class UsersController < ApplicationController
     end
   end
 
+  post "/signup" do
+    
+  end
+
   post "/" do
     user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])

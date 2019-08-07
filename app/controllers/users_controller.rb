@@ -32,10 +32,11 @@ class UsersController < ApplicationController
   # GET: /users/5
   get "/users/:id" do
     if logged_in?
-      @user = current_user
+      @user = User.find_by_id(params[:id])
       erb :"/users/index.html"
     else
       redirect to "/"
+    end
   end
 
   # GET: /users/5/edit
@@ -52,4 +53,5 @@ class UsersController < ApplicationController
   delete "/users/:id/delete" do
     redirect "/users"
   end
+
 end

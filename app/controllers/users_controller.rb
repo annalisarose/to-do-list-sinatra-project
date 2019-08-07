@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   # GET: /users/5
   get "/users/:id" do
-    erb :"/users/show.html"
+    erb :"/users/index.html"
   end
 
   # GET: /users/5/edit

@@ -1,1 +1,7 @@
-<h1>This is the Model's index page.</h1>
+<h2>Your Lists</h2>
+
+<ul>
+<% @lists.each do |list| %>
+<li><a href="lists/<% @list.id %>"><%=@list.title%></a><li>
+  <%end%>
+</ul>

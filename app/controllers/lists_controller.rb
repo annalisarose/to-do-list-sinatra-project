@@ -2,7 +2,12 @@ class ListsController < ApplicationController
 
   # GET: /lists
   get "/lists" do
-    erb :"/lists/index.html"
+    if logged_in?
+      @lists = List.all
+      erb :"/lists/index.html"
+    else
+      redirect to "/"
+    end
   end
 
   # GET: /lists/new

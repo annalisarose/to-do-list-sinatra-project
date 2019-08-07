@@ -4,8 +4,7 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/new.html'
     else
-      @user = current_user
-      redirect to "/users/#{@user.id}"
+      redirect to "/users/#{current_user.id}"
     end
   end
 
@@ -13,10 +12,10 @@ class UsersController < ApplicationController
    if params[:username] == "" || params[:password] == ""
      redirect to "/signup"
    else
-     @user = User.new(:username => params[:username], :password => params[:password])
-     @user.save
-     session[:user_id] = @user.id
-     redirect to "/users/#{@user.id}"
+     user = User.new(:username => params[:username], :password => params[:password])
+     user.save
+     session[:user_id] = user.id
+     redirect to "/users/#{user.id}"
    end
  end
 

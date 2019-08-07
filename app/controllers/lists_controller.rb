@@ -12,7 +12,10 @@ class ListsController < ApplicationController
 
   # GET: /lists/new
   get "/lists/new" do
+    if logged_in?
     erb :"/lists/new.html"
+  else
+    redirect to "/"
   end
 
   # POST: /lists

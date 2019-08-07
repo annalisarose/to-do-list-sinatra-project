@@ -31,7 +31,11 @@ class UsersController < ApplicationController
 
   # GET: /users/5
   get "/users/:id" do
-    erb :"/users/index.html"
+    if logged_in?
+      @user = current_user
+      erb :"/users/index.html"
+    else
+      redirect to "/"
   end
 
   # GET: /users/5/edit

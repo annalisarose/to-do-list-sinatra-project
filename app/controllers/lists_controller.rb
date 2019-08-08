@@ -13,14 +13,22 @@ class ListsController < ApplicationController
   # GET: /lists/new
   get "/lists/new" do
     if logged_in?
-    erb :"/lists/new.html"
-  else
-    redirect to "/"
+      erb :"/lists/new.html"
+    else
+      redirect to "/"
+    end
   end
 
   # POST: /lists
   post "/lists" do
-    redirect "/lists"
+    @user = current_user
+    @list = List.create(:title => params["title"])
+    unless params[:checkitems][:contents].empty?
+      @list.checkitems << Checkitem.create(:contents => params["checkitems"]["contents"])
+    end
+    @list.save
+    @user.lists << @list
+    redirect "/lists/#{@list.id}"
   end
 
   # GET: /lists/5

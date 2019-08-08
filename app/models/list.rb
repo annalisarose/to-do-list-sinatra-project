@@ -1,4 +1,5 @@
 class List < ActiveRecord::Base
   belongs_to :user
   has_many :checkitems
+  #accepts_nested_attributes_for :checkitems
 end

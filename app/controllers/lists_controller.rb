@@ -1,3 +1,4 @@
+require 'pry'
 class ListsController < ApplicationController
 
   # GET: /lists
@@ -23,8 +24,11 @@ class ListsController < ApplicationController
   post "/lists" do
     @user = current_user
     @list = List.create(:title => params["title"])
-    unless params[:checkitems][:contents].empty?
-      @list.checkitems << Checkitem.create(:contents => params["checkitems"]["contents"])
+    #binding.pry
+    params[:list][:checkitems].each_with_index do |item, index|
+      if item["contents"] != ""
+      @list.checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
+      end
     end
     @list.save
     @user.lists << @list
@@ -50,4 +54,5 @@ class ListsController < ApplicationController
   delete "/lists/:id/delete" do
     redirect "/lists"
   end
+
 end

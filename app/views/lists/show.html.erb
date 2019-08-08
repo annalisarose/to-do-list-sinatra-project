@@ -1,3 +1,12 @@
-<h1>This is the show page for an individual instance of your model.</h1>
-<input type="checkbox" for="checkitems[contents[]]"></input>
-<input type="text" name="checkitems[contents[]]" value="">
+<h2><%= @list.title %></h2>
+<form action="/lists/#{<%= @list.id %>}" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+<ul>
+  <% @checkitems.each do |item| %>
+<input type="checkbox" for="checkitems[][contents]"></input>
+<input type="text" name="checkitems[][contents]" value="<%= item.contents %>"><br>
+  <% end %>
+</ul>
+<p>
+  <input type="submit" value="Update List">
+  </form>

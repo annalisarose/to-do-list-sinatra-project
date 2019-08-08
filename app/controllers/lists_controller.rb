@@ -4,7 +4,7 @@ class ListsController < ApplicationController
   # GET: /lists
   get "/lists" do
     if logged_in?
-      @lists = List.all
+      @lists = current_user.lists.all
       erb :"/lists/index.html"
     else
       redirect to "/"
@@ -37,13 +37,23 @@ class ListsController < ApplicationController
 
   # GET: /lists/5
   get "/lists/:id" do
-    erb :"/lists/show.html"
+    if logged_in?
+      @list = List.find_by_id(params[:id])
+      if @list && @list.user_id == current_user.id
+        @checkitems = @list.checkitems.all
+        erb :"/lists/show.html"
+      else
+        redirect to "/lists"
+      end
+    else
+    redirect to "/login"
+    end
   end
 
   # GET: /lists/5/edit
-  get "/lists/:id/edit" do
-    erb :"/lists/edit.html"
-  end
+#  get "/lists/:id/edit" do
+#    erb :"/lists/edit.html"
+#  end
 
   # PATCH: /lists/5
   patch "/lists/:id" do

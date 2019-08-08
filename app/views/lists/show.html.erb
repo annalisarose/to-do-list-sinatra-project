@@ -1,4 +1,6 @@
 <h2><%= @list.title %></h2>
+<p>Edit the text content of your tasks, or check them off to remove them from the list.<br>
+  To save your changes, push the "Update List" button.
 <form action="/lists/#{<%= @list.id %>}" method="POST">
   <input id="hidden" type="hidden" name="_method" value="PATCH">
 <ul>

@@ -32,13 +32,13 @@ class ListsController < ApplicationController
     end
     @list.save
     @user.lists << @list
-    redirect "/lists/#{@list.id}"
+    redirect "/lists/#{list.slug}"
   end
 
   # GET: /lists/5
-  get "/lists/:id" do
+  get "/lists/:slug" do
     if logged_in?
-      @list = List.find_by_id(params[:id])
+      @list = List.find_by_slug(params[:slug])
       if @list && @list.user_id == current_user.id
         @checkitems = @list.checkitems.all
         erb :"/lists/show.html"

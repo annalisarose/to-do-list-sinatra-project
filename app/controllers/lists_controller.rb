@@ -24,7 +24,6 @@ class ListsController < ApplicationController
   post "/lists" do
     @user = current_user
     @list = List.create(:title => params["title"])
-    #binding.pry
     params[:list][:checkitems].each_with_index do |item, index|
       if item["contents"] != ""
       @list.checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
@@ -32,13 +31,13 @@ class ListsController < ApplicationController
     end
     @list.save
     @user.lists << @list
-    redirect "/lists/#{list.slug}"
+    redirect "/lists/#{@list.id}"
   end
 
   # GET: /lists/5
-  get "/lists/:slug" do
+  get "/lists/:id" do
     if logged_in?
-      @list = List.find_by_slug(params[:slug])
+      @list = List.find_by_id(params[:id])
       if @list && @list.user_id == current_user.id
         @checkitems = @list.checkitems.all
         erb :"/lists/show.html"
@@ -50,14 +49,25 @@ class ListsController < ApplicationController
     end
   end
 
-  # GET: /lists/5/edit
-#  get "/lists/:id/edit" do
-#    erb :"/lists/edit.html"
-#  end
+  get "/lists/:id/edit" do
+    if logged_in?
+      @list = current_user.lists.find_by_id(params[:id])
+      @checkitems = @list.checkitems.all
+      erb :"/lists/edit.html"
+    else
+      redirect to "/login"
+    end
+  end
 
-  # PATCH: /lists/5
   patch "/lists/:id" do
-    redirect "/lists/:id"
+    #if logged_in?
+      binding.pry
+      #else
+      #  redirect to "/lists"
+      #end
+    #else
+    #redirect to "/login"
+    #end
   end
 
   # DELETE: /lists/5/delete

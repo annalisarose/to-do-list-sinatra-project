@@ -1,20 +1,7 @@
 <h2><%= @list.title %></h2>
-<p>Edit your tasks, add new tasks, or check tasks off to remove them from the list.<br>
-  To save your changes, push the "Update List" button.
-<form action="/lists/#{<%= @list.id %>}" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="PATCH">
 <ul>
   <% @checkitems.each do |item| %>
-<input type="checkbox" for="list[checkitems][][contents]"></input>
-<input type="text" name="list[checkitems][][contents]" value="<%= item.contents %>"><br>
+    <li><%= item.contents %></li>
   <% end %>
-  </ul>
-  <br>
-  <label>Add new tasks:</label><br>
-  <input type="text" name="list[checkitems][][contents]"><br>
-  <input type="text" name="list[checkitems][][contents]"><br>
-  <input type="text" name="list[checkitems][][contents]">
-  <p>
-<p>
-  <input type="submit" value="Update List">
-  </form>
+</ul>
+<p><a href="/lists/<%= @list.id %>/edit">Edit your list</a>

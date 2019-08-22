@@ -1,7 +1,15 @@
-<h2><%= @list.title %></h2>
-<ul>
-  <% @checkitems.each do |item| %>
-    <li><%= item.contents %></li>
-  <% end %>
-</ul>
-<p><a href="/lists/<%= @list.id %>/edit">Edit your list</a>
+<p>Edit your tasks, add new tasks, or check tasks off to remove them from the list.
+To save your changes, push the "Update List" button.</p>
+<form action="/lists/<%= @list.id %>" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <div class="title-div">
+    <input type="text" name="title" value="<%= @list.title %>">
+  </div>
+    <ul>
+      <% @checkitems.each do |item| %>
+      <input type="text" name="list[checkitems][][contents]" value="<%= item.contents %>"><br>
+      <% end %>
+    </ul>
+    <br>
+  <input type="submit" value="Update List">
+  </form>

@@ -22,6 +22,7 @@ class ListsController < ApplicationController
 
   # POST: /lists
   post "/lists" do
+    binding.pry
     @user = current_user
     @list = List.create(:title => params["title"])
     params[:list][:checkitems].each_with_index do |item, index|
@@ -60,8 +61,6 @@ class ListsController < ApplicationController
   end
 
   patch "/lists/:id" do
-    #if logged_in?
-      binding.pry
       #else
       #  redirect to "/lists"
       #end

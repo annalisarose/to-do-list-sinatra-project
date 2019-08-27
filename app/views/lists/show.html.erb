@@ -25,11 +25,7 @@ To save your changes, push the "Update List" button.</p>
   <input type="submit" value="Update List">
   </form>
   <br>
-  <br>
-  
-  <div class="delete-div">
   <form method="post" action="/lists/<%=@list.id%>/delete">
     <input id="hidden" type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Delete List">
-    </form>
-  </div>
+    <input type="submit" class="delete" value="Delete List">
+  </form>

@@ -52,16 +52,24 @@ class ListsController < ApplicationController
 
   patch "/lists/:id" do
     if logged_in?
-      #update list title
+      binding.pry
+      #update items
       @list = current_user.lists.find_by_id(params[:id])
-        if params[:title].to_s != @list.title.to_s
-          @list.update(title: params[:title])
+      @checkitems = @list.checkitems
+      @checkitems.each_with_index do |item, index|
+        item.update(contents: params[:checkitems][index]["contents"])
+      end
+      #delete checked items
+      if params["completed"]
+        Checkitem.delete(params["completed"].keys.map {|k| k.to_i})
+      end
+      #add new items
+      params[:list][:checkitems].each_with_index do |item, index|
+        if item["contents"] != ""
+        @checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
         end
-        #update items
-        @checkitems = @list.checkitems
-        @checkitems.each_with_index do |item, index|
-          item.update(contents: params[:checkitems][index]["contents"])
-        end
+      end
+      @list.save
       redirect to "/lists/#{@list.id}"
     else
       redirect to "/login"

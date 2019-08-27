@@ -46,7 +46,7 @@ class ListsController < ApplicationController
         redirect to "/lists"
       end
     else
-    redirect to "/login"
+    redirect to "/"
     end
   end
 
@@ -55,6 +55,9 @@ class ListsController < ApplicationController
       binding.pry
       #update items
       @list = current_user.lists.find_by_id(params[:id])
+      if @list.title != params[:title]
+        @list.update(title: params[:title])
+      end
       @checkitems = @list.checkitems
       @checkitems.each_with_index do |item, index|
         item.update(contents: params[:checkitems][index]["contents"])
@@ -72,7 +75,7 @@ class ListsController < ApplicationController
       @list.save
       redirect to "/lists/#{@list.id}"
     else
-      redirect to "/login"
+      redirect to "/"
     end
   end
 
@@ -83,7 +86,7 @@ class ListsController < ApplicationController
       @list.delete
       redirect to "/lists"
     else
-      redirect to '/login'
+      redirect to "/"
     end
   end
 

@@ -53,7 +53,7 @@ class ListsController < ApplicationController
   get "/lists/:id/edit" do
     if logged_in?
       @list = current_user.lists.find_by_id(params[:id])
-      @checkitems = @list.checkitems.all
+      @checkitems = @list.checkitems
       erb :"/lists/edit.html"
     else
       redirect to "/login"
@@ -61,12 +61,16 @@ class ListsController < ApplicationController
   end
 
   patch "/lists/:id" do
-      #else
-      #  redirect to "/lists"
-      #end
-    #else
-    #redirect to "/login"
-    #end
+    if logged_in?
+      #update list title
+      @list = current_user.lists.find_by_id(params[:id])
+        if params[:title].to_s != @list.title.to_s
+          @list.update(title: params[:title])
+        end
+      redirect to "/lists/#{@list.id}"
+    else
+      redirect to "/login"
+    end
   end
 
   # DELETE: /lists/5/delete

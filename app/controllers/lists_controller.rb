@@ -50,22 +50,17 @@ class ListsController < ApplicationController
     end
   end
 
-  get "/lists/:id/edit" do
-    if logged_in?
-      @list = current_user.lists.find_by_id(params[:id])
-      @checkitems = @list.checkitems
-      erb :"/lists/edit.html"
-    else
-      redirect to "/login"
-    end
-  end
-
   patch "/lists/:id" do
     if logged_in?
       #update list title
       @list = current_user.lists.find_by_id(params[:id])
         if params[:title].to_s != @list.title.to_s
           @list.update(title: params[:title])
+        end
+        #update items
+        @checkitems = @list.checkitems
+        @checkitems.each_with_index do |item, index|
+          item.update(contents: params[:checkitems][index]["contents"])
         end
       redirect to "/lists/#{@list.id}"
     else

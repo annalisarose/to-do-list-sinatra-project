@@ -62,6 +62,15 @@ class ListsController < ApplicationController
         @checkitems.each_with_index do |item, index|
           item.update(contents: params[:checkitems][index]["contents"])
         end
+        #delete checked items
+        Checkitem.delete(params["completed"].keys.map {|k| k.to_i})
+        #add new items
+        params[:list][:checkitems].each_with_index do |item, index|
+          if item["contents"] != ""
+            @checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
+          end
+        end
+        @list.save
       redirect to "/lists/#{@list.id}"
     else
       redirect to "/login"

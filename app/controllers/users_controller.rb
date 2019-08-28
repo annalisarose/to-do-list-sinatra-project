@@ -19,6 +19,14 @@ class UsersController < ApplicationController
    end
  end
 
+  get "/" do
+    if logged_in?
+      redirect to "/users/#{current_user.slug}"
+    else
+      erb :welcome
+    end
+  end
+
   post "/" do
     user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])

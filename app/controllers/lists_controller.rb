@@ -4,7 +4,8 @@ class ListsController < ApplicationController
   # GET: /lists
   get "/lists" do
     if logged_in?
-      @lists = current_user.lists.all
+      @user = current_user
+      @lists = @user.lists.all
       erb :"/lists/index.html"
     else
       redirect to "/"
@@ -14,6 +15,7 @@ class ListsController < ApplicationController
   # GET: /lists/new
   get "/lists/new" do
     if logged_in?
+      @user = current_user
       erb :"/lists/new.html"
     else
       redirect to "/"
@@ -22,7 +24,7 @@ class ListsController < ApplicationController
 
   # POST: /lists
   post "/lists" do
-    binding.pry
+    #binding.pry
     @user = current_user
     @list = List.create(:title => params["title"])
     params[:list][:checkitems].each_with_index do |item, index|

@@ -3,14 +3,18 @@
 <form action="/lists" method="POST">
   <label>Name your list:</label><br>
   <input type="text" id="title" name="title">
-  <p>
+  <br>
+  <br>
   <label>Add up to five tasks to your list at one time:</label><br>
   <input type="text" name="list[checkitems][][contents]"><br>
   <input type="text" name="list[checkitems][][contents]"><br>
   <input type="text" name="list[checkitems][][contents]"><br>
   <input type="text" name="list[checkitems][][contents]"><br>
   <input type="text" name="list[checkitems][][contents]">
-  <p>
+  <br>
+  <br>
   <input type="submit" value="Submit">
 
   </form>
+<br>
+  <a class="back" href="/users/<%= @user.slug %>">Back</a>

@@ -11,4 +11,9 @@ class List < ActiveRecord::Base
     List.all.find { |l| l.slug == slug}
   end
 
+
+#  def user_find_by_slug(slug)
+#    User.all.find{|user| user.slug == slug}
+#  end
+
 end

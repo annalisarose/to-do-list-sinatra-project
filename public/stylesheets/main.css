@@ -91,7 +91,12 @@
   }
 
   .delete {
+    font-size: 16px;
     color: red;
+  }
+
+  .back {
+    font-weight: bold;
   }
 
   footer.branding {

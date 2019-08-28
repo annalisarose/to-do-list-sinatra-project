@@ -1,7 +1,6 @@
 require 'pry'
 class ListsController < ApplicationController
 
-  # GET: /lists
   get "/lists" do
     if logged_in?
       @user = current_user
@@ -12,7 +11,6 @@ class ListsController < ApplicationController
     end
   end
 
-  # GET: /lists/new
   get "/lists/new" do
     if logged_in?
       @user = current_user
@@ -22,7 +20,6 @@ class ListsController < ApplicationController
     end
   end
 
-  # POST: /lists
   post "/lists" do
     #binding.pry
     @user = current_user
@@ -54,16 +51,16 @@ class ListsController < ApplicationController
 
   patch "/lists/:id" do
     if logged_in?
-      binding.pry
       #update items
       @list = current_user.lists.find_by_id(params[:id])
-      if @list.title != params[:title]
-        @list.update(title: params[:title])
-      end
+        if @list.title != params[:title]
+          @list.update(title: params[:title])
+        end
+      #update items
       @checkitems = @list.checkitems
-      @checkitems.each_with_index do |item, index|
-        item.update(contents: params[:checkitems][index]["contents"])
-      end
+        @checkitems.each_with_index do |item, index|
+          item.update(contents: params[:checkitems][index]["contents"])
+        end
       #delete checked items
       if params["completed"]
         Checkitem.delete(params["completed"].keys.map {|k| k.to_i})
@@ -74,6 +71,7 @@ class ListsController < ApplicationController
         @checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
         end
       end
+      #save updated list
       @list.save
       redirect to "/lists/#{@list.id}"
     else
@@ -81,7 +79,6 @@ class ListsController < ApplicationController
     end
   end
 
-  # DELETE: /lists/5/delete
   delete "/lists/:id/delete" do
     if logged_in?
       @list = current_user.lists.find_by_id(params[:id])

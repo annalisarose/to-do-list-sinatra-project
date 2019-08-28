@@ -31,13 +31,13 @@ class ListsController < ApplicationController
     end
     @list.save
     @user.lists << @list
-    redirect "/lists/#{@list.id}"
+    redirect "/lists/#{@list.slug}"
   end
 
   # GET: /lists/5
-  get "/lists/:id" do
+  get "/lists/:slug" do
     if logged_in?
-      @list = List.find_by_id(params[:id])
+      @list = List.find_by_slug(params[:slug])
       if @list && @list.user_id == current_user.id
         @checkitems = @list.checkitems.all
         erb :"/lists/show.html"
@@ -49,10 +49,10 @@ class ListsController < ApplicationController
     end
   end
 
-  patch "/lists/:id" do
+  patch "/lists/:slug" do
     if logged_in?
       #update items
-      @list = current_user.lists.find_by_id(params[:id])
+      @list = current_user.lists.find_by_slug(params[:slug])
         if @list.title != params[:title]
           @list.update(title: params[:title])
         end
@@ -73,15 +73,15 @@ class ListsController < ApplicationController
       end
       #save updated list
       @list.save
-      redirect to "/lists/#{@list.id}"
+      redirect to "/lists/#{@list.slug}"
     else
       redirect to "/"
     end
   end
 
-  delete "/lists/:id/delete" do
+  delete "/lists/:slug/delete" do
     if logged_in?
-      @list = current_user.lists.find_by_id(params[:id])
+      @list = current_user.lists.find_by_slug(params[:slug])
       @list.delete
       redirect to "/lists"
     else

@@ -1,6 +1,6 @@
 <p>Edit your list, add new tasks, or check tasks off to remove them from the list.
 To save your changes, push the "Update List" button.</p>
-<form action="/lists/<%= @list.id %>" method="POST">
+<form action="/lists/<%= @list.slug %>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="PATCH">
   <div class="title-div">
     <input type="text" name="title" value="<%= @list.title %>">
@@ -25,7 +25,7 @@ To save your changes, push the "Update List" button.</p>
   <input type="submit" class="update" value="Update List">
   </form>
   <br>
-  <form method="post" action="/lists/<%=@list.id%>/delete">
+  <form method="post" action="/lists/<%=@list.slug%>/delete">
     <input id="hidden" type="hidden" name="_method" value="DELETE">
     <input type="submit" class="delete" value="Delete List">
   </form>

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
    if params[:username] == "" || params[:password] == ""
      redirect to "/signup"
    else
+     #if username already exists, tell user they need to create another username
      user = User.new(:username => params[:username], :password => params[:password])
      user.save
      session[:user_id] = user.id

@@ -23,6 +23,7 @@ class ListsController < ApplicationController
   post "/lists" do
     #binding.pry
     @user = current_user
+    #if title already exists, add +1 to end of slug?
     @list = List.create(:title => params["title"])
     params[:list][:checkitems].each_with_index do |item, index|
       if item["contents"] != ""

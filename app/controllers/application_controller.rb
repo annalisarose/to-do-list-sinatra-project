@@ -9,14 +9,6 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "todo_secret"
   end
 
-  get "/" do
-    if logged_in?
-      redirect to "/users/#{current_user.slug}"
-    else
-      erb :welcome
-    end
-  end
-
   helpers do
 
     def logged_in?
@@ -26,12 +18,6 @@ class ApplicationController < Sinatra::Base
     def current_user
       @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
-
-  #  def item_update
-  #    @list = List.find(params[:id])
-  #    @checkitems = @list.checkitems
-  #    @list.checkitems.update(@checkitems(params[:id]))
-  #  end
 
   end
 

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
    if params[:username] == "" || params[:password] == ""
      redirect to "/signup"
    elsif User.exists?(username: params[:username])
-     flash[:message] = "Username is already taken."
+     flash[:message] = "*username is already taken"
      redirect to "/signup"
    else
      user = User.new(:username => params[:username], :password => params[:password])

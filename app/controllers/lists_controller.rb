@@ -24,9 +24,9 @@ class ListsController < ApplicationController
     @user = current_user
     #if title already exists, tell user they need to create another title
     if @user.lists.exists?(title: params[:title])
-      flash[:title] = "title is already taken"
+      flash[:title] = "*title is already taken"
            #binding.pry
-      redirect to "/lists/new"
+      erb :"/lists/new.html"
     else
       @list = List.create(:title => params["title"])
       params[:list][:checkitems].each_with_index do |item, index|
@@ -34,10 +34,10 @@ class ListsController < ApplicationController
           @list.checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
         end
       end
+      @list.save
+      @user.lists << @list
+      redirect "/lists/#{@list.slug}"
     end
-    @list.save
-    @user.lists << @list
-    redirect "/lists/#{@list.slug}"
   end
 
   # GET: /lists/5

@@ -16,7 +16,7 @@ class UsersController < ApplicationController
    elsif User.exists?(username: params[:username])
      flash[:message] = "username is already taken"
     #binding.pry
-     redirect to "/signup"
+     erb :'users/new.html'
    else
      user = User.new(:username => params[:username], :password => params[:password])
      user.save

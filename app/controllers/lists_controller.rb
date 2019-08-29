@@ -21,13 +21,18 @@ class ListsController < ApplicationController
   end
 
   post "/lists" do
-    #binding.pry
     @user = current_user
-    #if title already exists, add +1 to end of slug?
-    @list = List.create(:title => params["title"])
-    params[:list][:checkitems].each_with_index do |item, index|
-      if item["contents"] != ""
-      @list.checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
+    #if title already exists, tell user they need to create another title
+    if @user.lists.exists?(title: params[:title])
+      flash[:title] = "title is already taken"
+           #binding.pry
+      redirect to "/lists/new"
+    else
+      @list = List.create(:title => params["title"])
+      params[:list][:checkitems].each_with_index do |item, index|
+        if item["contents"] != ""
+          @list.checkitems << Checkitem.create(:contents => params["list"]["checkitems"][index]["contents"])
+        end
       end
     end
     @list.save

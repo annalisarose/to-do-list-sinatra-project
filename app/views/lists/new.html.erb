@@ -3,7 +3,11 @@
 <form action="/lists" method="POST">
   <label>Name your list:</label><br>
   <input type="text" id="title" name="title" required>
-  <br>
+  <p class="flash">
+    <% if flash.has?(:title) %>
+      <%= flash[:title] %>
+    <% end %>
+  </p>
   <br>
   <label>Add up to five tasks to your list at one time:</label><br>
   <input type="text" name="list[checkitems][][contents]"><br>

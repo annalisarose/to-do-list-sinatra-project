@@ -1,3 +1,5 @@
+require 'pry'
+
 class UsersController < ApplicationController
 
   get "/signup" do
@@ -12,7 +14,8 @@ class UsersController < ApplicationController
    if params[:username] == "" || params[:password] == ""
      redirect to "/signup"
    elsif User.exists?(username: params[:username])
-     flash[:message] = "*username is already taken"
+     flash[:message] = "username is already taken"
+    #binding.pry
      redirect to "/signup"
    else
      user = User.new(:username => params[:username], :password => params[:password])

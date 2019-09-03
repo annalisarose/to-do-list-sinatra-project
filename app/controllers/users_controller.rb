@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   post "/signup" do
    if params[:username] == "" || params[:password] == ""
      redirect to "/signup"
-   elsif User.exists?(username: params[:username])
+   elsif User.find_by_slug(params[:username].downcase.gsub(" ","-"))
      flash[:message] = "username '#{params[:username]}' is already taken"
      erb :'users/new.html'
    else

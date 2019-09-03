@@ -1,4 +1,3 @@
-require 'pry'
 class UsersController < ApplicationController
 
   get "/signup" do
@@ -14,7 +13,6 @@ class UsersController < ApplicationController
      redirect to "/signup"
    elsif User.find_by_slug(params[:username].downcase.gsub(" ","-"))
      flash.now[:message] = "username '#{params[:username]}' is already taken"
-     binding.pry
      erb :'users/new.html'
    else
      user = User.new(:username => params[:username], :password => params[:password])

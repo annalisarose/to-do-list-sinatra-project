@@ -1,4 +1,3 @@
-require 'pry'
 class ListsController < ApplicationController
 
   get "/lists" do
@@ -57,12 +56,11 @@ class ListsController < ApplicationController
   patch "/lists/:slug" do
     if logged_in?
       @user = current_user
-      #update items
+      #update title
       @list = @user.lists.find_by_slug(params[:slug])
         if @list.title != params[:title]
           if @user.lists.exists?(title: params[:title])
             flash[:taken] = "*title '#{params[:title]}' is already taken"
-            #binding.pry
             redirect to "/lists/#{@list.slug}"
           else
             @list.update(title: params[:title])

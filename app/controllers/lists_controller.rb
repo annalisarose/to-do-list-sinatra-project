@@ -23,7 +23,7 @@ class ListsController < ApplicationController
     @user = current_user
     #if title already exists, tell user they need to create another title
     if @user.lists.find_by_slug(params[:title].downcase.gsub(" ","-"))
-      flash[:title] = "*title '#{params[:title]}' is already taken"
+      flash.keep[:title] = "*title '#{params[:title]}' is already taken"
       redirect to "/lists/new"
     else
       @list = List.create(:title => params["title"])
@@ -60,7 +60,7 @@ class ListsController < ApplicationController
       @list = @user.lists.find_by_slug(params[:slug])
         if @list.title != params[:title]
           if @user.lists.find_by_slug(params[:title].downcase.gsub(" ","-"))
-            flash[:taken] = "*title '#{params[:title]}' is already taken"
+            flash.keep[:taken] = "*title '#{params[:title]}' is already taken"
             redirect to "/lists/#{@list.slug}"
           else
             @list.update(title: params[:title])

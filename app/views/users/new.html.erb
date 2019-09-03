@@ -5,11 +5,11 @@
     Name:
     <br>
     <input type="text" name="username" id="username">
-    <p class="flash">
-      <% if flash.has?(:message) %>
+      <% if flash[:message] %>
+        <p class="flash">
         <%= flash[:message] %>
-      <% end %>
-    </p>
+        </p>
+        <% end %>
   <p>Password:<br>
     <input type="password" name="password" id="password"></p>
   </div>

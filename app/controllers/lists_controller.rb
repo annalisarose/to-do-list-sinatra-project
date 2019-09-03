@@ -24,9 +24,8 @@ class ListsController < ApplicationController
     @user = current_user
     #if title already exists, tell user they need to create another title
     if @user.lists.exists?(title: params[:title])
-      flash[:title] = "*title is already taken"
-           #binding.pry
-      erb :"/lists/new.html"
+      flash[:title] = "*title '#{params[:title]}' is already taken"
+      redirect to "/lists/new"
     else
       @list = List.create(:title => params["title"])
       params[:list][:checkitems].each_with_index do |item, index|
@@ -57,10 +56,17 @@ class ListsController < ApplicationController
 
   patch "/lists/:slug" do
     if logged_in?
+      @user = current_user
       #update items
-      @list = current_user.lists.find_by_slug(params[:slug])
+      @list = @user.lists.find_by_slug(params[:slug])
         if @list.title != params[:title]
-          @list.update(title: params[:title])
+          if @user.lists.exists?(title: params[:title])
+            flash[:taken] = "*title '#{params[:title]}' is already taken"
+            #binding.pry
+            redirect to "/lists/#{@list.slug}"
+          else
+            @list.update(title: params[:title])
+          end
         end
       #update items
       @checkitems = @list.checkitems

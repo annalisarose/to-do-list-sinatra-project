@@ -4,6 +4,11 @@ To save your changes, push the "Update List" button.</p>
   <input id="hidden" type="hidden" name="_method" value="PATCH">
   <div class="title-div">
     <input type="text" name="title" value="<%= @list.title %>">
+    <p class="flash">
+      <% if flash[:taken] %>
+        <%= flash[:taken] %>
+      <% end %>
+    </p>
   </div>
     <ul>
       <% @checkitems.each do |item| %>

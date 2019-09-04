@@ -5,7 +5,6 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 use Rack::MethodOverride
-use CheckitemsController
 use ListsController
 use UsersController
 run ApplicationController

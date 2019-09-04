@@ -38,7 +38,6 @@ class ListsController < ApplicationController
     end
   end
 
-  # GET: /lists/5
   get "/lists/:slug" do
     if logged_in?
       @list = List.find_by_slug(params[:slug])

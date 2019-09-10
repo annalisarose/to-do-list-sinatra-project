@@ -2,10 +2,13 @@
 <p>Titles must be unique, and they are not case-sensitive. Tasks do not have to be unique.</p>
 <form action="/lists" method="POST">
   <label>Name your list:</label><br>
-  <input type="text" id="title" name="title" required>
+  <input type="text" id="title" name="title">
   <p class="flash">
     <% if flash[:title] %>
       <%= flash[:title] %>
+    <% end %>
+    <% if flash[:blank] %>
+      <%= flash[:blank] %>
     <% end %>
   </p>
   <br>

@@ -8,7 +8,7 @@ class List < ActiveRecord::Base
   end
 
   def self.find_by_slug(slug)
-    List.all.find { |l| l.slug == slug}
+    self.all.find { |l| l.slug == slug}
   end
 
 end
